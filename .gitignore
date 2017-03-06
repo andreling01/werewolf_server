@@ -37,3 +37,6 @@ nbdist/
 
 ### Mac ###
 .DS_Store
+
+### test data ###
+GAME_*

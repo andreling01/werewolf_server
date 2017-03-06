@@ -1,7 +1,8 @@
 package com.doubleL.werewolf.model.advancedModel;
 
 import com.doubleL.werewolf.enums.CharacterIdentity;
-import com.doubleL.werewolf.model.baseModel.God;
+import com.doubleL.werewolf.enums.CharacterType;
+import com.doubleL.werewolf.model.baseModel.Character;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,7 +11,7 @@ import lombok.Setter;
  */
 @Setter
 @Getter
-public class Witch extends God {
+public class Witch extends Character {
 
     private boolean usedMedicine;
     private boolean usedPoison;
@@ -31,6 +32,11 @@ public class Witch extends God {
         this.usedPoison = false;
         this.canTakeTwoActionInANight = canTakeTwoActionInANight;
         this.canRescueSelf = canRescueSelf;
+    }
+
+    @Override
+    public CharacterType getCharacterType() {
+        return CharacterType.GOD;
     }
 
     @Override

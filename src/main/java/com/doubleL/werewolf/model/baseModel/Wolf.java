@@ -18,6 +18,7 @@ public class Wolf extends Character {
         return CharacterType.WOLF;
     }
 
+    @Override
     public CharacterIdentity getCharacterIdentity() {
         return CharacterIdentity.WOLF;
     }

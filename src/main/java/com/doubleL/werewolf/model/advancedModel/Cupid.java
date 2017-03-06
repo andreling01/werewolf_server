@@ -1,7 +1,8 @@
 package com.doubleL.werewolf.model.advancedModel;
 
 import com.doubleL.werewolf.enums.CharacterIdentity;
-import com.doubleL.werewolf.model.baseModel.God;
+import com.doubleL.werewolf.enums.CharacterType;
+import com.doubleL.werewolf.model.baseModel.Character;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -10,13 +11,18 @@ import lombok.Setter;
  */
 @Setter
 @Getter
-public class Cupid extends God {
+public class Cupid extends Character {
 
     private boolean actionTaken;
 
     public Cupid() {
         super();
         this.actionTaken = false;
+    }
+
+    @Override
+    public CharacterType getCharacterType() {
+        return CharacterType.GOD;
     }
 
     @Override

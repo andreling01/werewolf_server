@@ -17,6 +17,7 @@ public class Human extends Character {
         return CharacterType.HUMAN;
     }
 
+    @Override
     public CharacterIdentity getCharacterIdentity() {
         return CharacterIdentity.TOWNSFOLK;
     }

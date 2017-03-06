@@ -1,6 +1,7 @@
 package com.doubleL.werewolf.model.advancedModel;
 
 import com.doubleL.werewolf.enums.CharacterIdentity;
+import com.doubleL.werewolf.enums.CharacterType;
 import com.doubleL.werewolf.model.baseModel.Wolf;
 
 /**
@@ -10,6 +11,11 @@ public class Daemon extends Wolf {
 
     public Daemon() {
         super();
+    }
+
+    @Override
+    public CharacterType getCharacterType() {
+        return CharacterType.WOLF;
     }
 
     @Override
