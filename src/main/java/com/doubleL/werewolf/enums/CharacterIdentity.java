@@ -11,19 +11,25 @@ import java.util.Map;
  * Created by andreling on 2017/2/27.
  */
 public enum CharacterIdentity {
-    WITCH,
-    PROPHET,
-    GUARDIAN,
-    HUNTER,
-    ELDER_OF_SILENCE,
-    IDIOT,
-    CUPID,
-    THIEF,
-    TOWNSFOLK,
-    WOLF,
-    WHITE_WOLF,
-    BEAUTY_WOLF,
-    DAEMON;
+    WITCH(6),
+    PROPHET(7),
+    GUARDIAN(8),
+    HUNTER(10),
+    ELDER_OF_SILENCE(9),
+    IDIOT(99),
+    CUPID(2),
+    THIEF(1),
+    TOWNSFOLK(99),
+    WOLF(3),
+    WHITE_WOLF(99),
+    BEAUTY_WOLF(4),
+    DAEMON(5);
+
+    private int order;
+
+    CharacterIdentity(int order) {
+        this.order = order;
+    }
 
     private static Map<String, CharacterIdentity> map = new HashMap<>();
 
@@ -36,7 +42,7 @@ public enum CharacterIdentity {
         map.put("idiot", IDIOT);
         map.put("cupid", CUPID);
         map.put("thief", THIEF);
-        map.put("townsfolk", TOWNSFOLK);
+        map.put("human", TOWNSFOLK);
         map.put("wolf", WOLF);
         map.put("white_wolf", WHITE_WOLF);
         map.put("beauty_wolf", BEAUTY_WOLF);
@@ -56,5 +62,9 @@ public enum CharacterIdentity {
         }
 
         return null; // or fail
+    }
+
+    public int getCharacterOrder() {
+        return this.order;
     }
 }

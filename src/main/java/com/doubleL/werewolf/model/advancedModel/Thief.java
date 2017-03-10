@@ -3,7 +3,6 @@ package com.doubleL.werewolf.model.advancedModel;
 import com.doubleL.werewolf.enums.CharacterIdentity;
 import com.doubleL.werewolf.enums.CharacterType;
 import com.doubleL.werewolf.model.baseModel.Character;
-import com.doubleL.werewolf.model.baseModel.Human;
 import lombok.Getter;
 import lombok.Setter;
 

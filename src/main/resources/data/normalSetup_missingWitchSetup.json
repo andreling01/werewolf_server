@@ -1,0 +1,10 @@
+{
+  "wolf": 4,
+  "witch": 1,
+  "prophet": 1,
+  "hunter": 1,
+  "idiot": 1,
+  "human": 4,
+  "selfRescue": 0,
+  "numOfCharacters": 12
+}

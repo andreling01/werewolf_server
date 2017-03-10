@@ -13,7 +13,9 @@ import org.junit.Test;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.junit.Assert.*;
@@ -43,21 +45,19 @@ public class StorageUtilTests {
         assertEquals("Number of Humans: ", testGame.getNumOfHumans(), actualReturnedGame.getNumOfHumans());
         assertEquals("Number of Gods: ", testGame.getNumOfGods(), actualReturnedGame.getNumOfGods());
         assertEquals("Number of Wolves: ", testGame.getNumOfWolves(), actualReturnedGame.getNumOfWolves());
-        assertEquals("Size of Character List: ", testGame.getCharacterList().size(),
-                actualReturnedGame.getCharacterList().size());
-        assertEquals("Size of Character Order List: ", testGame.getCharacterOrderList(),
-                actualReturnedGame.getCharacterOrderList());
-        assertThat("First Character should be: ", actualReturnedGame.getCharacterList().get(0),
+        assertEquals("Size of Character List: ", testGame.getCharacters().length,
+                actualReturnedGame.getCharacters().length);
+        assertThat("First Character should be: ", actualReturnedGame.getCharacters()[0],
                 instanceOf(Wolf.class));
-        assertThat("Second Character should be: ", actualReturnedGame.getCharacterList().get(1),
+        assertThat("Second Character should be: ", actualReturnedGame.getCharacters()[1],
                 instanceOf(WhiteWolf.class));
-        assertThat("Third Character should be: ", actualReturnedGame.getCharacterList().get(2),
+        assertThat("Third Character should be: ", actualReturnedGame.getCharacters()[2],
                 instanceOf(Human.class));
-        assertThat("Forth Character should be: ", actualReturnedGame.getCharacterList().get(3),
+        assertThat("Forth Character should be: ", actualReturnedGame.getCharacters()[3],
                 instanceOf(Witch.class));
-        assertThat("Fifth Character should be: ", actualReturnedGame.getCharacterList().get(4),
+        assertThat("Fifth Character should be: ", actualReturnedGame.getCharacters()[4],
                 instanceOf(Prophet.class));
-        assertThat("Sixth Character should be: ", actualReturnedGame.getCharacterList().get(5),
+        assertThat("Sixth Character should be: ", actualReturnedGame.getCharacters()[5],
                 instanceOf(Hunter.class));
         File testFile = new File(TEST_FILE_NAME);
         testFile.delete();
@@ -66,20 +66,20 @@ public class StorageUtilTests {
     private Game buildTestGameData() {
         Game testGame = new Game();
         testGame.setRoomId(TEST_ROOM_ID);
-        List<Character>  characterList = new ArrayList<>();
+        List<Character> characterList = new ArrayList<>();
         characterList.add(new Wolf());
         characterList.add(new WhiteWolf());
         characterList.add(new Human());
         characterList.add(new Witch());
         characterList.add(new Prophet());
         characterList.add(new Hunter());
-        testGame.setCharacterList(characterList);
-        List<CharacterIdentity> characterOrderList = new ArrayList<>();
+        testGame.setCharacters(characterList.toArray(new Character[0]));
+        Queue<CharacterIdentity> characterOrderList = new LinkedList<>();
         characterOrderList.add(CharacterIdentity.WOLF);
         characterOrderList.add(CharacterIdentity.WITCH);
         characterOrderList.add(CharacterIdentity.PROPHET);
         characterOrderList.add(CharacterIdentity.HUNTER);
-        testGame.setCharacterOrderList(characterOrderList);
+        testGame.setCharacterOrder(characterOrderList);
         testGame.setNumOfGods(3);
         testGame.setNumOfHumans(1);
         testGame.setNumOfWolves(2);
