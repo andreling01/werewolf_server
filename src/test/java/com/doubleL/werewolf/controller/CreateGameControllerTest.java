@@ -2,7 +2,6 @@ package com.doubleL.werewolf.controller;
 
 import com.doubleL.werewolf.exception.GameException;
 import com.doubleL.werewolf.util.StorageUtil;
-import com.sun.deploy.net.HttpResponse;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;

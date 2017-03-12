@@ -64,7 +64,7 @@ public class GameInitializer {
     private static void assignSeat(Character character, int numOfPlayers, List<Integer> seatOrder,
                                    Character[] characters, Map<CharacterIdentity, List<Integer>> characterMap) {
         int seatNumber = seatOrder.remove(0);
-        character.setSeatNumber(seatNumber);
+        character.setSeatNumber(seatNumber + 1);
         characters[seatNumber] = character;
         updateCharacterMap(characterMap, character.getCharacterIdentity(), seatNumber);
     }
