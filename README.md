@@ -3,7 +3,7 @@
 # API List
 User | Name | Body | Response
 -----|------|------|---------
-GameOwner|createGame| |roomId(String), 200
+GameOwner|createGame| gameSetup(String) |roomId(String), 200
 Everyone|joinGame|roomId(String), seatNumber(Int)|CharacterInfo(Object), 200
 GameOwner|startGame|roomId(String)|200(Game Start)/400(Wait for all players)
 Everyone|useAbility|roomId(String), seatNumber(Int), targetSetNumber(Int, Optional)|result(Boolean),200

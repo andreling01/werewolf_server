@@ -3,12 +3,9 @@ package com.doubleL.werewolf.util;
 import com.doubleL.werewolf.enums.CharacterIdentity;
 import com.doubleL.werewolf.exception.GameException;
 import com.doubleL.werewolf.model.Game;
+import com.doubleL.werewolf.utility.GameCreator;
+import org.junit.Before;
 import org.junit.Test;
-
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.InputStream;
-import java.nio.charset.StandardCharsets;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -18,10 +15,16 @@ import static org.junit.Assert.assertNotNull;
  */
 public class GameInitializerTest {
 
+    private GameCreator gameCreator;
+
+    @Before
+    public void init() throws Exception {
+        gameCreator = new GameCreator();
+    }
+
     @Test
     public void testNormalGameSetup() throws Exception {
-        String gameSetupData = readTestData("normalSetup.json");
-        Game actualGame = GameInitializer.initializeGame(gameSetupData);
+        Game actualGame = gameCreator.createAGame("normalSetup.json");
         assertNotNull(actualGame);
         assertEquals("Number of Wolves: ", 4, actualGame.getNumOfWolves());
         assertEquals("Number of Humans: ", 4, actualGame.getNumOfHumans());
@@ -40,20 +43,17 @@ public class GameInitializerTest {
 
     @Test(expected = GameException.class)
     public void testNormalGameSetup_MissingWitchSetup() throws Exception {
-        String gameSetupData = readTestData("normalSetup_missingWitchSetup.json");
-        GameInitializer.initializeGame(gameSetupData);
+        Game actualGame = gameCreator.createAGame("normalSetup_missingWitchSetup.json");
     }
 
     @Test(expected = GameException.class)
     public void testNormalGameSetup_MissingNumOfCharacters() throws Exception {
-        String gameSetupData = readTestData("normalSetup_missingNumOfCharacters.json");
-        GameInitializer.initializeGame(gameSetupData);
+        Game actualGame = gameCreator.createAGame("normalSetup_missingNumOfCharacters.json");
     }
 
     @Test
     public void testThiefGameSetup() throws Exception {
-        String gameSetupData = readTestData("thiefSetup.json");
-        Game actualGame = GameInitializer.initializeGame(gameSetupData);
+        Game actualGame = gameCreator.createAGame("thiefSetup.json");
         assertNotNull(actualGame);
         assertEquals("Number of Wolves: ", 4, actualGame.getNumOfWolves());
         assertEquals("Number of Humans: ", 5, actualGame.getNumOfHumans());
@@ -72,8 +72,7 @@ public class GameInitializerTest {
 
     @Test
     public void testAllCharactersGameSetup() throws Exception {
-        String gameSetupData = readTestData("allCharacterSetup.json");
-        Game actualGame = GameInitializer.initializeGame(gameSetupData);
+        Game actualGame = gameCreator.createAGame("allCharacterSetup.json");
         assertNotNull(actualGame);
         assertEquals("Number of Wolves: ", 7, actualGame.getNumOfWolves());
         assertEquals("Number of Humans: ", 5, actualGame.getNumOfHumans());
@@ -94,16 +93,5 @@ public class GameInitializerTest {
         assertEquals("Size of Seating array: ", 19, actualGame.getCharacters().length);
         //check the numbers of type of character
         assertEquals("Number of types of character: ", 13, actualGame.getCharacterMap().keySet().size());
-    }
-
-
-    private String readTestData(String fileName) throws Exception {
-        String fileNamePath = "data/" + fileName;
-        File file = new File(getClass().getClassLoader().getResource(fileNamePath).getFile());
-        InputStream fileInputStream = new FileInputStream(file);
-        byte[] data = new byte[(int) file.length()];
-        fileInputStream.read(data);
-        fileInputStream.close();
-        return new String(data, StandardCharsets.UTF_8);
     }
 }
