@@ -32,6 +32,7 @@ public class JoinGameController {
     @Autowired
     private ObjectMapper objectMapper;
 
+    @CrossOrigin
     @RequestMapping(value = "/joinGame", method = RequestMethod.POST)
     public ResponseEntity<Character> joinGame(@RequestBody String inputBody,
                                               HttpServletRequest request) throws GameException {

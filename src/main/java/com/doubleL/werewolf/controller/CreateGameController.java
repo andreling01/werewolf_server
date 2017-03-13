@@ -21,6 +21,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @RestController
 public class CreateGameController {
 
+    @CrossOrigin
     @RequestMapping(value = "/createGame", method = RequestMethod.POST)
     public ResponseEntity<String> createGame(@RequestBody String gameSetup,
                                              HttpServletRequest request) throws GameException {
