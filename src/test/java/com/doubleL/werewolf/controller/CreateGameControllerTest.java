@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 /**
  * Created by andreling on 3/11/17.
@@ -35,6 +36,7 @@ public class CreateGameControllerTest {
     @Before
     public void init() throws Exception {
         createGameController = new CreateGameController();
+        when(request.getRequestedSessionId()).thenReturn("testSessionID");
     }
 
     @Test

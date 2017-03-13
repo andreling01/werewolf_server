@@ -24,7 +24,8 @@ public class CreateGameController {
 
     @CrossOrigin
     @RequestMapping(value = "/createGame", method = RequestMethod.POST)
-    public ResponseEntity<String> createGame(@RequestBody String gameSetup, HttpServletRequest request) throws GameException {
+    public ResponseEntity<String> createGame(@RequestBody String gameSetup, HttpServletRequest request) throws
+            GameException {
 
         try {
             checkNotNull(gameSetup);

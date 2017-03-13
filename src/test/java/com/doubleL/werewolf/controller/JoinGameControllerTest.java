@@ -32,8 +32,6 @@ import static org.mockito.Mockito.*;
 @RunWith(MockitoJUnitRunner.class)
 public class JoinGameControllerTest {
 
-    private GameCreator gameCreator;
-
     private JoinGameController joinGameController;
 
     private Game game;
@@ -46,10 +44,9 @@ public class JoinGameControllerTest {
 
     @Before
     public void init() throws Exception {
-        gameCreator = new GameCreator();
         joinGameController = new JoinGameController(mockObjectMapper);
         when(request.getRequestedSessionId()).thenReturn("Random session id");
-        game = gameCreator.createAGame("normalSetup.json");
+        game = new GameCreator().createAGame("normalSetup.json");
         StorageUtil.writeGameData(game);
     }
 
@@ -64,6 +61,21 @@ public class JoinGameControllerTest {
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertNotNull(response.getBody());
         assertThat(response.getBody(), instanceOf(Character.class));
+    }
+
+    @Test(expected = GameException.class)
+    public void testNormalGame_duplicateSeatNumber() throws Exception {
+        Map<String, String> inputMap = new HashMap<>();
+        inputMap.put(Constants.ROOM_ID_KEY, game.getRoomId());
+        inputMap.put(Constants.SEAT_NUMBER_KEY, "1");
+        when(mockObjectMapper.readValue(anyString(), any(TypeReference.class))).thenReturn(inputMap);
+        ResponseEntity<Character> response = joinGameController.joinGame("inputData", request);
+        assertNotNull(response);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertNotNull(response.getBody());
+        assertThat(response.getBody(), instanceOf(Character.class));
+        ResponseEntity<Character> secondResponse = joinGameController.joinGame("inputData", request);
+        assertEquals(HttpStatus.BAD_REQUEST, secondResponse.getStatusCode());
     }
 
     @Test(expected = GameException.class)

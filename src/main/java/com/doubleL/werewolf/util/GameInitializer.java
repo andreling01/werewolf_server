@@ -12,6 +12,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -33,21 +34,26 @@ public class GameInitializer {
         roomIdBase++;
         Map<String, Integer> gameSetup;
         try {
-            gameSetup = mapper.readValue(gameSetupJson, new TypeReference<Map<String, Integer>>() {
-            });
+            gameSetup = mapper.readValue(gameSetupJson, new TypeReference<Map<String, Integer>>() {});
         } catch (IOException e) {
-            throw new GameException(String.format("The Game[%s] cannot be started due to json parse error.", roomId), e);
+            throw new GameException(String.format("The Game[%s] cannot be started due to json parse error.", roomId),
+                                    e);
         }
         return setUpGame(gameSetup, roomId);
     }
 
     private static List<Integer> generateRandomCharacterAssignment(int numberOfCharacter) {
-        List<Integer> range = IntStream.range(0, numberOfCharacter).boxed().collect(Collectors.toList());
-        Collections.shuffle(range);
-        return range;
+        List<List<Integer>> randomeListPool  = new ArrayList<>(10);
+        for (int i = 0; i < 10; i ++) {
+            List<Integer> range = IntStream.range(0, numberOfCharacter).boxed().collect(Collectors.toList());
+            Collections.shuffle(range, new Random(System.nanoTime()));
+            randomeListPool.add(range);
+        }
+        return randomeListPool.get(ThreadLocalRandom.current().nextInt(randomeListPool.size()));
     }
 
-    private static void updateCharacterMap(Map<CharacterIdentity, List<Integer>> map, CharacterIdentity characterIdentity, int seatNum) {
+    private static void updateCharacterMap(Map<CharacterIdentity, List<Integer>> map, CharacterIdentity
+            characterIdentity, int seatNum) {
         if (map.containsKey(characterIdentity)) {
             List<Integer> seatList = map.get(characterIdentity);
             seatList.add(seatNum);
@@ -60,7 +66,8 @@ public class GameInitializer {
         }
     }
 
-    private static void assignSeat(Character character, int numOfPlayers, List<Integer> seatOrder, Character[] characters, Map<CharacterIdentity, List<Integer>> characterMap) {
+    private static void assignSeat(Character character, List<Integer> seatOrder, Character[] characters,
+                                   Map<CharacterIdentity, List<Integer>> characterMap) {
         int seatNumber = seatOrder.remove(0);
         character.setSeatNumber(seatNumber + 1);
         characters[seatNumber] = character;
@@ -90,17 +97,10 @@ public class GameInitializer {
         int numOfGods = 0;
         for (String key : gameSetup.keySet()) {
             switch (key) {
-                case "human":
-                    for (int i = 0; i < gameSetup.get(CharacterIdentity.TOWNSFOLK.toValue()); i++) {
-                        Character human = new Human();
-                        assignSeat(human, numOfPlayers, seatOrder, characters, characterMap);
-                        numOfHumans++;
-                    }
-                    break;
                 case "wolf":
                     for (int i = 0; i < gameSetup.get(CharacterIdentity.WOLF.toValue()); i++) {
                         Character wolf = new Wolf();
-                        assignSeat(wolf, numOfPlayers, seatOrder, characters, characterMap);
+                        assignSeat(wolf, seatOrder, characters, characterMap);
                         numOfWolves++;
                     }
                     characterOrderList.add(CharacterIdentity.WOLF);
@@ -108,7 +108,7 @@ public class GameInitializer {
                 case "thief":
                     if (gameSetup.get(CharacterIdentity.THIEF.toValue()) > 0) {
                         Character thief = new Thief();
-                        assignSeat(thief, numOfPlayers, seatOrder, characters, characterMap);
+                        assignSeat(thief, seatOrder, characters, characterMap);
                         characterOrderList.add(CharacterIdentity.THIEF);
                         numOfHumans++;
                     }
@@ -116,72 +116,22 @@ public class GameInitializer {
                 case "cupid":
                     if (gameSetup.get(CharacterIdentity.CUPID.toValue()) > 0) {
                         Character cupid = new Cupid();
-                        assignSeat(cupid, numOfPlayers, seatOrder, characters, characterMap);
+                        assignSeat(cupid, seatOrder, characters, characterMap);
                         characterOrderList.add(CharacterIdentity.CUPID);
-                        numOfGods++;
-                    }
-                    break;
-                case "witch":
-                    if (gameSetup.get(CharacterIdentity.WITCH.toValue()) > 0) {
-                        if (!gameSetup.containsKey(WITCH_SELF_RESCUE) || !gameSetup.containsKey(WITCH_DOUBLE_ACTIONS)) {
-                            throw new GameException(String.format("Missing witch setup data for Game[%s].", roomId));
-                        }
-                        Character witch = new Witch(gameSetup.get(WITCH_DOUBLE_ACTIONS) != 0, gameSetup.get(WITCH_SELF_RESCUE) != 0);
-                        assignSeat(witch, numOfPlayers, seatOrder, characters, characterMap);
-                        characterOrderList.add(CharacterIdentity.WITCH);
-                        numOfGods++;
-                    }
-                    break;
-                case "prophet":
-                    if (gameSetup.get(CharacterIdentity.PROPHET.toValue()) > 0) {
-                        Character prophet = new Prophet();
-                        assignSeat(prophet, numOfPlayers, seatOrder, characters, characterMap);
-                        characterOrderList.add(CharacterIdentity.PROPHET);
-                        numOfGods++;
-                    }
-                    break;
-                case "guardian":
-                    if (gameSetup.get(CharacterIdentity.GUARDIAN.toValue()) > 0) {
-                        Character guardian = new Guardian();
-                        assignSeat(guardian, numOfPlayers, seatOrder, characters, characterMap);
-                        characterOrderList.add(CharacterIdentity.GUARDIAN);
-                        numOfGods++;
-                    }
-                    break;
-                case "hunter":
-                    if (gameSetup.get(CharacterIdentity.HUNTER.toValue()) > 0) {
-                        Character hunter = new Hunter();
-                        assignSeat(hunter, numOfPlayers, seatOrder, characters, characterMap);
-                        characterOrderList.add(CharacterIdentity.HUNTER);
-                        numOfGods++;
-                    }
-                    break;
-                case "elder_of_silence":
-                    if (gameSetup.get(CharacterIdentity.ELDER_OF_SILENCE.toValue()) > 0) {
-                        Character elder_of_silence = new ElderOfSilence();
-                        assignSeat(elder_of_silence, numOfPlayers, seatOrder, characters, characterMap);
-                        characterOrderList.add(CharacterIdentity.ELDER_OF_SILENCE);
-                        numOfGods++;
-                    }
-                    break;
-                case "idiot":
-                    if (gameSetup.get(CharacterIdentity.IDIOT.toValue()) > 0) {
-                        Character idiot = new Idiot();
-                        assignSeat(idiot, numOfPlayers, seatOrder, characters, characterMap);
                         numOfGods++;
                     }
                     break;
                 case "white_wolf":
                     if (gameSetup.get(CharacterIdentity.WHITE_WOLF.toValue()) > 0) {
                         Character white_Wolf = new WhiteWolf();
-                        assignSeat(white_Wolf, numOfPlayers, seatOrder, characters, characterMap);
+                        assignSeat(white_Wolf, seatOrder, characters, characterMap);
                         numOfWolves++;
                     }
                     break;
                 case "beauty_wolf":
                     if (gameSetup.get(CharacterIdentity.BEAUTY_WOLF.toValue()) > 0) {
                         Character beauty_wolf = new BeautyWolf();
-                        assignSeat(beauty_wolf, numOfPlayers, seatOrder, characters, characterMap);
+                        assignSeat(beauty_wolf, seatOrder, characters, characterMap);
                         characterOrderList.add(CharacterIdentity.BEAUTY_WOLF);
                         numOfWolves++;
                     }
@@ -189,9 +139,67 @@ public class GameInitializer {
                 case "daemon":
                     if (gameSetup.get(CharacterIdentity.DAEMON.toValue()) > 0) {
                         Character daemon = new Daemon();
-                        assignSeat(daemon, numOfPlayers, seatOrder, characters, characterMap);
+                        assignSeat(daemon, seatOrder, characters, characterMap);
                         characterOrderList.add(CharacterIdentity.DAEMON);
                         numOfWolves++;
+                    }
+                    break;
+                case "witch":
+                    if (gameSetup.get(CharacterIdentity.WITCH.toValue()) > 0) {
+                        if (!gameSetup.containsKey(WITCH_SELF_RESCUE) || !gameSetup.containsKey(WITCH_DOUBLE_ACTIONS)) {
+                            throw new GameException(String.format("Missing witch setup data for Game[%s].", roomId));
+                        }
+                        Character witch = new Witch(gameSetup.get(WITCH_DOUBLE_ACTIONS) != 0,
+                                                    gameSetup.get(WITCH_SELF_RESCUE) != 0);
+                        assignSeat(witch, seatOrder, characters, characterMap);
+                        characterOrderList.add(CharacterIdentity.WITCH);
+                        numOfGods++;
+                    }
+                    break;
+                case "prophet":
+                    if (gameSetup.get(CharacterIdentity.PROPHET.toValue()) > 0) {
+                        Character prophet = new Prophet();
+                        assignSeat(prophet, seatOrder, characters, characterMap);
+                        characterOrderList.add(CharacterIdentity.PROPHET);
+                        numOfGods++;
+                    }
+                    break;
+                case "human":
+                    for (int i = 0; i < gameSetup.get(CharacterIdentity.TOWNSFOLK.toValue()); i++) {
+                        Character human = new Human();
+                        assignSeat(human, seatOrder, characters, characterMap);
+                        numOfHumans++;
+                    }
+                    break;
+                case "guardian":
+                    if (gameSetup.get(CharacterIdentity.GUARDIAN.toValue()) > 0) {
+                        Character guardian = new Guardian();
+                        assignSeat(guardian, seatOrder, characters, characterMap);
+                        characterOrderList.add(CharacterIdentity.GUARDIAN);
+                        numOfGods++;
+                    }
+                    break;
+                case "hunter":
+                    if (gameSetup.get(CharacterIdentity.HUNTER.toValue()) > 0) {
+                        Character hunter = new Hunter();
+                        assignSeat(hunter, seatOrder, characters, characterMap);
+                        characterOrderList.add(CharacterIdentity.HUNTER);
+                        numOfGods++;
+                    }
+                    break;
+                case "elder_of_silence":
+                    if (gameSetup.get(CharacterIdentity.ELDER_OF_SILENCE.toValue()) > 0) {
+                        Character elder_of_silence = new ElderOfSilence();
+                        assignSeat(elder_of_silence, seatOrder, characters, characterMap);
+                        characterOrderList.add(CharacterIdentity.ELDER_OF_SILENCE);
+                        numOfGods++;
+                    }
+                    break;
+                case "idiot":
+                    if (gameSetup.get(CharacterIdentity.IDIOT.toValue()) > 0) {
+                        Character idiot = new Idiot();
+                        assignSeat(idiot, seatOrder, characters, characterMap);
+                        numOfGods++;
                     }
                     break;
                 default:
