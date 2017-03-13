@@ -108,72 +108,93 @@ public class GameInitializer {
                     characterOrderList.add(CharacterIdentity.WOLF);
                     break;
                 case "thief":
-                    Character thief = new Thief();
-                    assignSeat(thief, numOfPlayers, seatOrder, characters, characterMap);
-                    characterOrderList.add(CharacterIdentity.THIEF);
-                    numOfHumans++;
+                    if(gameSetup.get(CharacterIdentity.THIEF.toValue()) > 0) {
+                        Character thief = new Thief();
+                        assignSeat(thief, numOfPlayers, seatOrder, characters, characterMap);
+                        characterOrderList.add(CharacterIdentity.THIEF);
+                        numOfHumans++;
+                    }
                     break;
                 case "cupid":
-                    Character cupid = new Cupid();
-                    assignSeat(cupid, numOfPlayers, seatOrder, characters, characterMap);
-                    characterOrderList.add(CharacterIdentity.CUPID);
-                    numOfGods++;
+                    if(gameSetup.get(CharacterIdentity.CUPID.toValue()) > 0) {
+                        Character cupid = new Cupid();
+                        assignSeat(cupid, numOfPlayers, seatOrder, characters, characterMap);
+                        characterOrderList.add(CharacterIdentity.CUPID);
+                        numOfGods++;
+                    }
                     break;
                 case "witch":
-                    if (!gameSetup.containsKey(WITCH_SELF_RESCUE) || !gameSetup.containsKey(WITCH_DOUBLE_ACTIONS)) {
-                        throw new GameException(String.format("Missing witch setup data for Game[%s].", roomId));
+                    if(gameSetup.get(CharacterIdentity.WITCH.toValue()) > 0) {
+                        if (!gameSetup.containsKey(WITCH_SELF_RESCUE) || !gameSetup.containsKey(WITCH_DOUBLE_ACTIONS)) {
+                            throw new GameException(String.format("Missing witch setup data for Game[%s].", roomId));
+                        }
+                        Character witch = new Witch(gameSetup.get(WITCH_DOUBLE_ACTIONS) != 0, gameSetup.get(WITCH_SELF_RESCUE) != 0);
+                        assignSeat(witch, numOfPlayers, seatOrder, characters, characterMap);
+                        characterOrderList.add(CharacterIdentity.WITCH);
+                        numOfGods++;
                     }
-                    Character witch = new Witch(gameSetup.get(WITCH_DOUBLE_ACTIONS) != 0,
-                            gameSetup.get(WITCH_SELF_RESCUE) != 0);
-                    assignSeat(witch, numOfPlayers, seatOrder, characters, characterMap);
-                    characterOrderList.add(CharacterIdentity.WITCH);
-                    numOfGods++;
                     break;
                 case "prophet":
-                    Character prophet = new Prophet();
-                    assignSeat(prophet, numOfPlayers, seatOrder, characters, characterMap);
-                    characterOrderList.add(CharacterIdentity.PROPHET);
-                    numOfGods++;
+                    if(gameSetup.get(CharacterIdentity.PROPHET.toValue()) > 0) {
+                        Character prophet = new Prophet();
+                        assignSeat(prophet, numOfPlayers, seatOrder, characters, characterMap);
+                        characterOrderList.add(CharacterIdentity.PROPHET);
+                        numOfGods++;
+                    }
                     break;
                 case "guardian":
-                    Character guardian = new Guardian();
-                    assignSeat(guardian, numOfPlayers, seatOrder, characters, characterMap);
-                    characterOrderList.add(CharacterIdentity.GUARDIAN);
-                    numOfGods++;
+                    if(gameSetup.get(CharacterIdentity.GUARDIAN.toValue()) > 0) {
+                        Character guardian = new Guardian();
+                        assignSeat(guardian, numOfPlayers, seatOrder, characters, characterMap);
+                        characterOrderList.add(CharacterIdentity.GUARDIAN);
+                        numOfGods++;
+                    }
                     break;
                 case "hunter":
-                    Character hunter = new Hunter();
-                    assignSeat(hunter, numOfPlayers, seatOrder, characters, characterMap);
-                    characterOrderList.add(CharacterIdentity.HUNTER);
-                    numOfGods++;
+                    if(gameSetup.get(CharacterIdentity.HUNTER.toValue()) > 0) {
+                        Character hunter = new Hunter();
+                        assignSeat(hunter, numOfPlayers, seatOrder, characters, characterMap);
+                        characterOrderList.add(CharacterIdentity.HUNTER);
+                        numOfGods++;
+                    }
                     break;
                 case "elder_of_silence":
-                    Character elder_of_silence = new ElderOfSilence();
-                    assignSeat(elder_of_silence, numOfPlayers, seatOrder, characters, characterMap);
-                    characterOrderList.add(CharacterIdentity.ELDER_OF_SILENCE);
-                    numOfGods++;
+                    if(gameSetup.get(CharacterIdentity.ELDER_OF_SILENCE.toValue()) > 0) {
+                        Character elder_of_silence = new ElderOfSilence();
+                        assignSeat(elder_of_silence, numOfPlayers, seatOrder, characters, characterMap);
+                        characterOrderList.add(CharacterIdentity.ELDER_OF_SILENCE);
+                        numOfGods++;
+                    }
                     break;
                 case "idiot":
-                    Character idiot = new Idiot();
-                    assignSeat(idiot, numOfPlayers, seatOrder, characters, characterMap);
-                    numOfGods++;
+                    if(gameSetup.get(CharacterIdentity.IDIOT.toValue()) > 0) {
+                        Character idiot = new Idiot();
+                        assignSeat(idiot, numOfPlayers, seatOrder, characters, characterMap);
+                        numOfGods++;
+                    }
                     break;
                 case "white_wolf":
-                    Character white_Wolf = new WhiteWolf();
-                    assignSeat(white_Wolf, numOfPlayers, seatOrder, characters, characterMap);
-                    numOfWolves++;
+                    if(gameSetup.get(CharacterIdentity.WHITE_WOLF.toValue()) > 0) {
+                        Character white_Wolf = new WhiteWolf();
+                        assignSeat(white_Wolf, numOfPlayers, seatOrder, characters, characterMap);
+                        numOfWolves++;
+                    }
                     break;
                 case "beauty_wolf":
-                    Character beauty_wolf = new BeautyWolf();
-                    assignSeat(beauty_wolf, numOfPlayers, seatOrder, characters, characterMap);
-                    characterOrderList.add(CharacterIdentity.BEAUTY_WOLF);
-                    numOfWolves++;
+                    if(gameSetup.get(CharacterIdentity.BEAUTY_WOLF.toValue()) > 0) {
+                        Character beauty_wolf = new BeautyWolf();
+                        assignSeat(beauty_wolf, numOfPlayers, seatOrder, characters, characterMap);
+                        characterOrderList.add(CharacterIdentity.BEAUTY_WOLF);
+                        numOfWolves++;
+                    }
                     break;
                 case "daemon":
-                    Character daemon = new Daemon();
-                    assignSeat(daemon, numOfPlayers, seatOrder, characters, characterMap);
-                    characterOrderList.add(CharacterIdentity.DAEMON);
-                    numOfWolves++;
+                    if(gameSetup.get(CharacterIdentity.DAEMON.toValue()) > 0) {
+                        Character daemon = new Daemon();
+                        assignSeat(daemon, numOfPlayers, seatOrder, characters, characterMap);
+                        characterOrderList.add(CharacterIdentity.DAEMON);
+                        numOfWolves++;
+                    }
                     break;
                 default:
                     break;
