@@ -11,9 +11,7 @@ import java.util.Map;
  * Created by andreling on 2017/2/26.
  */
 public enum CharacterType {
-    WOLF,
-    GOD,
-    HUMAN;
+    WOLF, GOD, HUMAN;
 
     private static Map<String, CharacterType> map = new HashMap<>();
 
@@ -31,8 +29,7 @@ public enum CharacterType {
     @JsonValue
     public String toValue() {
         for (Map.Entry<String, CharacterType> entry : map.entrySet()) {
-            if (entry.getValue() == this)
-                return entry.getKey();
+            if (entry.getValue() == this) return entry.getKey();
         }
 
         return null; // or fail

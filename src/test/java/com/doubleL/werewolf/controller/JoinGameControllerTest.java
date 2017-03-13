@@ -18,13 +18,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import javax.servlet.http.HttpServletRequest;
-
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.mockito.Mockito.*;
-import static org.junit.Assert.*;
 import static org.hamcrest.CoreMatchers.instanceOf;
+import static org.junit.Assert.*;
+import static org.mockito.Mockito.*;
 
 
 /**
@@ -59,8 +58,7 @@ public class JoinGameControllerTest {
         Map<String, String> inputMap = new HashMap<>();
         inputMap.put(Constants.ROOM_ID_KEY, game.getRoomId());
         inputMap.put(Constants.SEAT_NUMBER_KEY, "1");
-        when(mockObjectMapper.readValue(anyString(), any(TypeReference.class)))
-                .thenReturn(inputMap);
+        when(mockObjectMapper.readValue(anyString(), any(TypeReference.class))).thenReturn(inputMap);
         ResponseEntity<Character> response = joinGameController.joinGame("inputData", request);
         assertNotNull(response);
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -77,8 +75,7 @@ public class JoinGameControllerTest {
     public void testNoRoomId() throws Exception {
         Map<String, String> inputMap = new HashMap<>();
         inputMap.put(Constants.SEAT_NUMBER_KEY, "1");
-        when(mockObjectMapper.readValue(anyString(), any(TypeReference.class)))
-                .thenReturn(inputMap);
+        when(mockObjectMapper.readValue(anyString(), any(TypeReference.class))).thenReturn(inputMap);
         joinGameController.joinGame("NoRoomId", request);
     }
 
@@ -86,8 +83,7 @@ public class JoinGameControllerTest {
     public void testNoSeatNumber() throws Exception {
         Map<String, String> inputMap = new HashMap<>();
         inputMap.put(Constants.ROOM_ID_KEY, game.getRoomId());
-        when(mockObjectMapper.readValue(anyString(), any(TypeReference.class)))
-                .thenReturn(inputMap);
+        when(mockObjectMapper.readValue(anyString(), any(TypeReference.class))).thenReturn(inputMap);
         joinGameController.joinGame("NoSeatNum", request);
     }
 
@@ -96,8 +92,7 @@ public class JoinGameControllerTest {
         Map<String, String> inputMap = new HashMap<>();
         inputMap.put(Constants.ROOM_ID_KEY, game.getRoomId());
         inputMap.put(Constants.SEAT_NUMBER_KEY, "invalidSeatNumber");
-        when(mockObjectMapper.readValue(anyString(), any(TypeReference.class)))
-                .thenReturn(inputMap);
+        when(mockObjectMapper.readValue(anyString(), any(TypeReference.class))).thenReturn(inputMap);
         joinGameController.joinGame("invalidSeatNumber", request);
     }
 

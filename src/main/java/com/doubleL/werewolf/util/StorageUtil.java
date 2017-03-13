@@ -20,8 +20,7 @@ public class StorageUtil {
     public static void writeGameData(Game game) throws GameException {
         try {
             String fileName = GAME_FILE_NAME_PREFIX + game.getRoomId();
-            Writer fileWriter = new BufferedWriter(new OutputStreamWriter(
-                    new FileOutputStream(fileName, false), StandardCharsets.UTF_8));
+            Writer fileWriter = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fileName, false), StandardCharsets.UTF_8));
             String jsonString = mapper.writeValueAsString(game);
             fileWriter.write(jsonString);
             fileWriter.close();

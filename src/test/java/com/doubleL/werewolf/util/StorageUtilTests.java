@@ -45,20 +45,13 @@ public class StorageUtilTests {
         assertEquals("Number of Humans: ", testGame.getNumOfHumans(), actualReturnedGame.getNumOfHumans());
         assertEquals("Number of Gods: ", testGame.getNumOfGods(), actualReturnedGame.getNumOfGods());
         assertEquals("Number of Wolves: ", testGame.getNumOfWolves(), actualReturnedGame.getNumOfWolves());
-        assertEquals("Size of Character List: ", testGame.getCharacters().length,
-                actualReturnedGame.getCharacters().length);
-        assertThat("First Character should be: ", actualReturnedGame.getCharacters()[0],
-                instanceOf(Wolf.class));
-        assertThat("Second Character should be: ", actualReturnedGame.getCharacters()[1],
-                instanceOf(WhiteWolf.class));
-        assertThat("Third Character should be: ", actualReturnedGame.getCharacters()[2],
-                instanceOf(Human.class));
-        assertThat("Forth Character should be: ", actualReturnedGame.getCharacters()[3],
-                instanceOf(Witch.class));
-        assertThat("Fifth Character should be: ", actualReturnedGame.getCharacters()[4],
-                instanceOf(Prophet.class));
-        assertThat("Sixth Character should be: ", actualReturnedGame.getCharacters()[5],
-                instanceOf(Hunter.class));
+        assertEquals("Size of Character List: ", testGame.getCharacters().length, actualReturnedGame.getCharacters().length);
+        assertThat("First Character should be: ", actualReturnedGame.getCharacters()[0], instanceOf(Wolf.class));
+        assertThat("Second Character should be: ", actualReturnedGame.getCharacters()[1], instanceOf(WhiteWolf.class));
+        assertThat("Third Character should be: ", actualReturnedGame.getCharacters()[2], instanceOf(Human.class));
+        assertThat("Forth Character should be: ", actualReturnedGame.getCharacters()[3], instanceOf(Witch.class));
+        assertThat("Fifth Character should be: ", actualReturnedGame.getCharacters()[4], instanceOf(Prophet.class));
+        assertThat("Sixth Character should be: ", actualReturnedGame.getCharacters()[5], instanceOf(Hunter.class));
         File testFile = new File(TEST_FILE_NAME);
         testFile.delete();
     }

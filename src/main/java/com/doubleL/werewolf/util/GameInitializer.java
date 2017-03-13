@@ -47,8 +47,7 @@ public class GameInitializer {
         return range;
     }
 
-    private static void updateCharacterMap(Map<CharacterIdentity, List<Integer>> map,
-                                           CharacterIdentity characterIdentity, int seatNum) {
+    private static void updateCharacterMap(Map<CharacterIdentity, List<Integer>> map, CharacterIdentity characterIdentity, int seatNum) {
         if (map.containsKey(characterIdentity)) {
             List<Integer> seatList = map.get(characterIdentity);
             seatList.add(seatNum);
@@ -61,8 +60,7 @@ public class GameInitializer {
         }
     }
 
-    private static void assignSeat(Character character, int numOfPlayers, List<Integer> seatOrder,
-                                   Character[] characters, Map<CharacterIdentity, List<Integer>> characterMap) {
+    private static void assignSeat(Character character, int numOfPlayers, List<Integer> seatOrder, Character[] characters, Map<CharacterIdentity, List<Integer>> characterMap) {
         int seatNumber = seatOrder.remove(0);
         character.setSeatNumber(seatNumber + 1);
         characters[seatNumber] = character;
@@ -108,7 +106,7 @@ public class GameInitializer {
                     characterOrderList.add(CharacterIdentity.WOLF);
                     break;
                 case "thief":
-                    if(gameSetup.get(CharacterIdentity.THIEF.toValue()) > 0) {
+                    if (gameSetup.get(CharacterIdentity.THIEF.toValue()) > 0) {
                         Character thief = new Thief();
                         assignSeat(thief, numOfPlayers, seatOrder, characters, characterMap);
                         characterOrderList.add(CharacterIdentity.THIEF);
@@ -116,7 +114,7 @@ public class GameInitializer {
                     }
                     break;
                 case "cupid":
-                    if(gameSetup.get(CharacterIdentity.CUPID.toValue()) > 0) {
+                    if (gameSetup.get(CharacterIdentity.CUPID.toValue()) > 0) {
                         Character cupid = new Cupid();
                         assignSeat(cupid, numOfPlayers, seatOrder, characters, characterMap);
                         characterOrderList.add(CharacterIdentity.CUPID);
@@ -124,7 +122,7 @@ public class GameInitializer {
                     }
                     break;
                 case "witch":
-                    if(gameSetup.get(CharacterIdentity.WITCH.toValue()) > 0) {
+                    if (gameSetup.get(CharacterIdentity.WITCH.toValue()) > 0) {
                         if (!gameSetup.containsKey(WITCH_SELF_RESCUE) || !gameSetup.containsKey(WITCH_DOUBLE_ACTIONS)) {
                             throw new GameException(String.format("Missing witch setup data for Game[%s].", roomId));
                         }
@@ -135,7 +133,7 @@ public class GameInitializer {
                     }
                     break;
                 case "prophet":
-                    if(gameSetup.get(CharacterIdentity.PROPHET.toValue()) > 0) {
+                    if (gameSetup.get(CharacterIdentity.PROPHET.toValue()) > 0) {
                         Character prophet = new Prophet();
                         assignSeat(prophet, numOfPlayers, seatOrder, characters, characterMap);
                         characterOrderList.add(CharacterIdentity.PROPHET);
@@ -143,7 +141,7 @@ public class GameInitializer {
                     }
                     break;
                 case "guardian":
-                    if(gameSetup.get(CharacterIdentity.GUARDIAN.toValue()) > 0) {
+                    if (gameSetup.get(CharacterIdentity.GUARDIAN.toValue()) > 0) {
                         Character guardian = new Guardian();
                         assignSeat(guardian, numOfPlayers, seatOrder, characters, characterMap);
                         characterOrderList.add(CharacterIdentity.GUARDIAN);
@@ -151,7 +149,7 @@ public class GameInitializer {
                     }
                     break;
                 case "hunter":
-                    if(gameSetup.get(CharacterIdentity.HUNTER.toValue()) > 0) {
+                    if (gameSetup.get(CharacterIdentity.HUNTER.toValue()) > 0) {
                         Character hunter = new Hunter();
                         assignSeat(hunter, numOfPlayers, seatOrder, characters, characterMap);
                         characterOrderList.add(CharacterIdentity.HUNTER);
@@ -159,7 +157,7 @@ public class GameInitializer {
                     }
                     break;
                 case "elder_of_silence":
-                    if(gameSetup.get(CharacterIdentity.ELDER_OF_SILENCE.toValue()) > 0) {
+                    if (gameSetup.get(CharacterIdentity.ELDER_OF_SILENCE.toValue()) > 0) {
                         Character elder_of_silence = new ElderOfSilence();
                         assignSeat(elder_of_silence, numOfPlayers, seatOrder, characters, characterMap);
                         characterOrderList.add(CharacterIdentity.ELDER_OF_SILENCE);
@@ -167,21 +165,21 @@ public class GameInitializer {
                     }
                     break;
                 case "idiot":
-                    if(gameSetup.get(CharacterIdentity.IDIOT.toValue()) > 0) {
+                    if (gameSetup.get(CharacterIdentity.IDIOT.toValue()) > 0) {
                         Character idiot = new Idiot();
                         assignSeat(idiot, numOfPlayers, seatOrder, characters, characterMap);
                         numOfGods++;
                     }
                     break;
                 case "white_wolf":
-                    if(gameSetup.get(CharacterIdentity.WHITE_WOLF.toValue()) > 0) {
+                    if (gameSetup.get(CharacterIdentity.WHITE_WOLF.toValue()) > 0) {
                         Character white_Wolf = new WhiteWolf();
                         assignSeat(white_Wolf, numOfPlayers, seatOrder, characters, characterMap);
                         numOfWolves++;
                     }
                     break;
                 case "beauty_wolf":
-                    if(gameSetup.get(CharacterIdentity.BEAUTY_WOLF.toValue()) > 0) {
+                    if (gameSetup.get(CharacterIdentity.BEAUTY_WOLF.toValue()) > 0) {
                         Character beauty_wolf = new BeautyWolf();
                         assignSeat(beauty_wolf, numOfPlayers, seatOrder, characters, characterMap);
                         characterOrderList.add(CharacterIdentity.BEAUTY_WOLF);
@@ -189,7 +187,7 @@ public class GameInitializer {
                     }
                     break;
                 case "daemon":
-                    if(gameSetup.get(CharacterIdentity.DAEMON.toValue()) > 0) {
+                    if (gameSetup.get(CharacterIdentity.DAEMON.toValue()) > 0) {
                         Character daemon = new Daemon();
                         assignSeat(daemon, numOfPlayers, seatOrder, characters, characterMap);
                         characterOrderList.add(CharacterIdentity.DAEMON);

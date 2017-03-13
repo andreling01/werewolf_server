@@ -15,25 +15,8 @@ import lombok.Setter;
 
 @Setter
 @Getter
-@JsonTypeInfo(
-        use = JsonTypeInfo.Id.NAME,
-        include = JsonTypeInfo.As.PROPERTY,
-        property = "type"
-)
-@JsonSubTypes({
-        @JsonSubTypes.Type(value = Human.class, name = "human"),
-        @JsonSubTypes.Type(value = Wolf.class, name = "wolf"),
-        @JsonSubTypes.Type(value = BeautyWolf.class, name = "beautyWolf"),
-        @JsonSubTypes.Type(value = Cupid.class, name = "cupid"),
-        @JsonSubTypes.Type(value = ElderOfSilence.class, name = "elderOfSilence"),
-        @JsonSubTypes.Type(value = Guardian.class, name = "guardian"),
-        @JsonSubTypes.Type(value = Hunter.class, name = "hunter"),
-        @JsonSubTypes.Type(value = Idiot.class, name = "idiot"),
-        @JsonSubTypes.Type(value = Prophet.class, name = "prophet"),
-        @JsonSubTypes.Type(value = Thief.class, name = "thief"),
-        @JsonSubTypes.Type(value = WhiteWolf.class, name = "whiteWolf"),
-        @JsonSubTypes.Type(value = Witch.class, name = "witch")
-})
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
+@JsonSubTypes({@JsonSubTypes.Type(value = Human.class, name = "human"), @JsonSubTypes.Type(value = Wolf.class, name = "wolf"), @JsonSubTypes.Type(value = BeautyWolf.class, name = "beautyWolf"), @JsonSubTypes.Type(value = Cupid.class, name = "cupid"), @JsonSubTypes.Type(value = ElderOfSilence.class, name = "elderOfSilence"), @JsonSubTypes.Type(value = Guardian.class, name = "guardian"), @JsonSubTypes.Type(value = Hunter.class, name = "hunter"), @JsonSubTypes.Type(value = Idiot.class, name = "idiot"), @JsonSubTypes.Type(value = Prophet.class, name = "prophet"), @JsonSubTypes.Type(value = Thief.class, name = "thief"), @JsonSubTypes.Type(value = WhiteWolf.class, name = "whiteWolf"), @JsonSubTypes.Type(value = Witch.class, name = "witch")})
 @JsonIgnoreProperties({"characterType", "characterIdentity"})
 public abstract class Character {
     private int seatNumber;

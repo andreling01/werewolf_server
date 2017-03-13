@@ -11,19 +11,7 @@ import java.util.Map;
  * Created by andreling on 2017/2/27.
  */
 public enum CharacterIdentity {
-    WITCH(6),
-    PROPHET(7),
-    GUARDIAN(8),
-    HUNTER(10),
-    ELDER_OF_SILENCE(9),
-    IDIOT(99),
-    CUPID(2),
-    THIEF(1),
-    TOWNSFOLK(99),
-    WOLF(3),
-    WHITE_WOLF(99),
-    BEAUTY_WOLF(4),
-    DAEMON(5);
+    WITCH(6), PROPHET(7), GUARDIAN(8), HUNTER(10), ELDER_OF_SILENCE(9), IDIOT(99), CUPID(2), THIEF(1), TOWNSFOLK(99), WOLF(3), WHITE_WOLF(99), BEAUTY_WOLF(4), DAEMON(5);
 
     private int order;
 
@@ -57,8 +45,7 @@ public enum CharacterIdentity {
     @JsonValue
     public String toValue() {
         for (Map.Entry<String, CharacterIdentity> entry : map.entrySet()) {
-            if (entry.getValue() == this)
-                return entry.getKey();
+            if (entry.getValue() == this) return entry.getKey();
         }
 
         return null; // or fail

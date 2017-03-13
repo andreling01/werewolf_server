@@ -22,9 +22,7 @@ import static org.junit.Assert.*;
 @RunWith(MockitoJUnitRunner.class)
 public class CreateGameControllerTest {
 
-    private static final String testInput = "{\n" + "  \"wolf\":4,\n" + "  \"witch\":1,\n" + "  \"prophet\":1,\n" +
-            "  \"hunter\":1,\n" + "  \"idiot\":1,\n" + "  \"human\":4,\n" + "  \"selfRescue\":0,\n" +
-            "  \"doubleActions\":0,\n" + "  \"numOfCharacters\":12\n" + "}";
+    private static final String testInput = "{\n" + "  \"wolf\":4,\n" + "  \"witch\":1,\n" + "  \"prophet\":1,\n" + "  \"hunter\":1,\n" + "  \"idiot\":1,\n" + "  \"human\":4,\n" + "  \"selfRescue\":0,\n" + "  \"doubleActions\":0,\n" + "  \"numOfCharacters\":12\n" + "}";
 
     private CreateGameController createGameController;
 
@@ -40,7 +38,7 @@ public class CreateGameControllerTest {
     }
 
     @Test
-    public void testCreateGame()  throws Exception {
+    public void testCreateGame() throws Exception {
         response = createGameController.createGame(testInput, request);
         assertNotNull(response);
         assertEquals(HttpStatus.OK, response.getStatusCode());
@@ -59,7 +57,7 @@ public class CreateGameControllerTest {
 
     @After
     public void clean() throws Exception {
-        if(response != null) {
+        if (response != null) {
             StorageUtil.deleteGameData(response.getBody());
         }
     }
