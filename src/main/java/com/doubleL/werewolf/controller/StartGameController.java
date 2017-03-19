@@ -54,6 +54,8 @@ public class StartGameController {
                 }
             }
             if (unreadyPlayer.isEmpty()) {
+                game.setInTheNight(true);
+                StorageUtil.writeGameData(game);
                 return new ResponseEntity<>(HttpStatus.OK);
             } else {
                 throw new GameException(

@@ -9,6 +9,7 @@ import com.doubleL.werewolf.model.baseModel.Human;
 import com.doubleL.werewolf.model.baseModel.Wolf;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.util.*;
@@ -19,6 +20,7 @@ import java.util.stream.IntStream;
 /**
  * Created by andreling on 3/6/17.
  */
+@Slf4j
 public class GameInitializer {
 
     private static final String NUM_OF_CHARACTERS_KEY = "numOfCharacters";
@@ -67,11 +69,17 @@ public class GameInitializer {
     }
 
     private static void assignSeat(Character character, List<Integer> seatOrder, Character[] characters,
-                                   Map<CharacterIdentity, List<Integer>> characterMap) {
-        int seatNumber = seatOrder.remove(0);
-        character.setSeatNumber(seatNumber + 1);
-        characters[seatNumber] = character;
-        updateCharacterMap(characterMap, character.getCharacterIdentity(), seatNumber);
+                                   Map<CharacterIdentity, List<Integer>> characterMap) throws GameException {
+        try {
+            int seatNumber = seatOrder.remove(0);
+            character.setSeatNumber(seatNumber + 1);
+            characters[seatNumber] = character;
+            updateCharacterMap(characterMap, character.getCharacterIdentity(), seatNumber);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            String errorMessage = "Number of Characters didn't match detailed character number";
+            log.error(errorMessage);
+            throw new GameException(errorMessage, e);
+        }
     }
 
     private static Game setUpGame(Map<String, Integer> gameSetup, String roomId) throws GameException {

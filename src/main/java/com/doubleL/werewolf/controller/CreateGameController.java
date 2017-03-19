@@ -34,7 +34,7 @@ public class CreateGameController {
             log.info(String.format("Game[%s] has been started.", game.getRoomId()));
             return new ResponseEntity<>(game.getRoomId(), HttpStatus.OK);
         } catch (NullPointerException e) {
-            String errorMessage = "Game initial setup cannot be null";
+            String errorMessage = String.format("Create Game Request[%s] cannot have a null body", request.getRequestedSessionId());
             log.error(errorMessage);
             throw new GameException(errorMessage, e);
         }

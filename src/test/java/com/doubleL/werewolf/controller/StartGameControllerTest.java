@@ -59,6 +59,8 @@ public class StartGameControllerTest {
         when(mockObjectMapper.readValue(anyString(), any(TypeReference.class))).thenReturn(inputMap);
         ResponseEntity<String> response = startGameController.startGame("normalInput", request);
         assertEquals(HttpStatus.OK, response.getStatusCode());
+        Game actualGame = StorageUtil.readGameData(game.getRoomId());
+        assertTrue(actualGame.isInTheNight());
     }
 
     @Test(expected = GameException.class)

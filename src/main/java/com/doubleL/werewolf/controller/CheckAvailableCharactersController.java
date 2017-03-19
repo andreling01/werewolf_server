@@ -1,5 +1,6 @@
 package com.doubleL.werewolf.controller;
 
+import com.doubleL.werewolf.enums.CharacterIdentity;
 import com.doubleL.werewolf.exception.GameException;
 import com.doubleL.werewolf.model.Constants;
 import com.doubleL.werewolf.model.Game;
@@ -16,27 +17,27 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import static com.google.common.base.Preconditions.checkNotNull;
 
-
 /**
- * Created by andreling on 3/10/17.
+ * Created by andreling on 3/13/17.
  */
-
 @AllArgsConstructor
 @Slf4j
 @RestController
-public class JoinGameController {
+public class CheckAvailableCharactersController {
 
     @Autowired
     private ObjectMapper objectMapper;
 
     @CrossOrigin
-    @RequestMapping(value = "/joinGame", method = RequestMethod.POST)
-    public ResponseEntity<Character> joinGame(@RequestBody String inputBody, HttpServletRequest request) throws
-            GameException {
+    @RequestMapping(value = "/checkAvailableCharacters", method = RequestMethod.POST)
+    public ResponseEntity<List<Character>> checkAvailableCharacters(@RequestBody String inputBody, HttpServletRequest
+            request) throws GameException {
         try {
             checkNotNull(inputBody);
             Map<String, String> inputMap = objectMapper
@@ -55,29 +56,39 @@ public class JoinGameController {
             }
             Game game = StorageUtil.readGameData(inputMap.get(Constants.ROOM_ID_KEY));
             int seatNumber = Integer.valueOf(inputMap.get(Constants.SEAT_NUMBER_KEY));
-            if (!game.getCharacters()[seatNumber - 1].isSeatAssigned()) {
-                log.info(String.format("Game[%s] Seat [%s] has been assigned", game.getRoomId(),
-                                   String.valueOf(seatNumber)));
-                game.getCharacters()[seatNumber - 1].setSeatAssigned(true);
-                StorageUtil.writeGameData(game);
-                return new ResponseEntity<>(game.getCharacters()[seatNumber - 1], HttpStatus.OK);
-            } else {
-                throw new GameException(String.format("Game[%s] Seat [%s] has been assigned", game.getRoomId(),
-                                                      String.valueOf(seatNumber)));
+            Character[] characters = game.getCharacters();
+            if(!game.isInTheNight()) {
+                String errorMessage = String.format("The game[%s] hasn't been started", game.getRoomId());
+                log.error(errorMessage);
+                throw new GameException(errorMessage);
             }
+            if(CharacterIdentity.THIEF != characters[seatNumber].getCharacterIdentity()) {
+                String errorMessage = String.format("Check Available Character Request[%s] didn't match character's " +
+                                                            "identity", request.getRequestedSessionId());
+                log.error(errorMessage);
+                throw new GameException(errorMessage);
+            }
+            List<Character> characterList = new ArrayList<>(2);
+            characterList.add(characters[characters.length - 1]);
+            characterList.add(characters[characters.length - 2]);
+            return new ResponseEntity<List<Character>>(characterList, HttpStatus.OK);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            String errorMessage = "[Thief]Game has an incorrect initial setup";
+            log.error(errorMessage);
+            throw new GameException(errorMessage, e);
         } catch (NullPointerException e) {
-            String errorMessage = String.format("Join Game Request[%s] has a null input body", request
+            String errorMessage = String.format("Check Available Character Request[%s] has a null input body", request
                     .getRequestedSessionId());
             log.error(errorMessage);
             throw new GameException(errorMessage, e);
         } catch (NumberFormatException e) {
             String errorMessage = String
-                    .format("Join Game Request[%s] has a integer parsing issue", request.getRequestedSessionId());
+                    .format("Check Available Character Request[%s] has a integer parsing issue", request.getRequestedSessionId());
             log.error(errorMessage);
             throw new GameException(errorMessage, e);
         } catch (IOException e) {
             String errorMessage = String
-                    .format("Join Game Request[%s] has a json parsing issue", request.getRequestedSessionId());
+                    .format("Check Available Character Request[%s] has a json parsing issue", request.getRequestedSessionId());
             log.error(errorMessage);
             throw new GameException(errorMessage, e);
         }
