@@ -59,7 +59,7 @@ public class StartGameController {
                 return new ResponseEntity<>(HttpStatus.OK);
             } else {
                 throw new GameException(
-                        "Waiting for Play " + unreadyPlayer.stream().map(seatNumber -> String.valueOf(seatNumber + 1))
+                        "Waiting for Player " + unreadyPlayer.stream().map(seatNumber -> String.valueOf(seatNumber + 1))
                                                            .collect(joining(", ")) + " to join the game");
             }
         } catch (NullPointerException e) {

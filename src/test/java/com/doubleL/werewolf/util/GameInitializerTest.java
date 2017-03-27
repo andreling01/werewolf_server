@@ -81,6 +81,7 @@ public class GameInitializerTest {
         //check the order of Moving queue
         assertEquals(CharacterIdentity.THIEF, actualGame.getCharacterOrder().poll());
         assertEquals(CharacterIdentity.CUPID, actualGame.getCharacterOrder().poll());
+        assertEquals(CharacterIdentity.CUPID_EVENT, actualGame.getCharacterOrder().poll());
         assertEquals(CharacterIdentity.WOLF, actualGame.getCharacterOrder().poll());
         assertEquals(CharacterIdentity.BEAUTY_WOLF, actualGame.getCharacterOrder().poll());
         assertEquals(CharacterIdentity.DAEMON, actualGame.getCharacterOrder().poll());
@@ -89,6 +90,7 @@ public class GameInitializerTest {
         assertEquals(CharacterIdentity.GUARDIAN, actualGame.getCharacterOrder().poll());
         assertEquals(CharacterIdentity.ELDER_OF_SILENCE, actualGame.getCharacterOrder().poll());
         assertEquals(CharacterIdentity.HUNTER, actualGame.getCharacterOrder().poll());
+        assertEquals(CharacterIdentity.END_OF_NIGHT_EVENT, actualGame.getCharacterOrder().poll());
         //check the size of seating array
         assertEquals("Size of Seating array: ", 19, actualGame.getCharacters().length);
         //check the numbers of type of character

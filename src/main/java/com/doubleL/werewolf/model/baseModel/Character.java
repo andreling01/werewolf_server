@@ -22,26 +22,19 @@ import lombok.Setter;
         @JsonSubTypes.Type(value = Guardian.class, name = "guardian"), @JsonSubTypes.Type(value = Hunter.class, name
         = "hunter"), @JsonSubTypes.Type(value = Idiot.class, name = "idiot"), @JsonSubTypes.Type(value = Prophet
         .class, name = "prophet"), @JsonSubTypes.Type(value = Thief.class, name = "thief"), @JsonSubTypes.Type(value
-        = WhiteWolf.class, name = "whiteWolf"), @JsonSubTypes.Type(value = Witch.class, name = "witch")})
+        = WhiteWolf.class, name = "whiteWolf"), @JsonSubTypes.Type(value = Daemon.class, name = "daemon"),
+        @JsonSubTypes.Type(value = Witch.class, name = "witch")})
 @JsonIgnoreProperties({"characterType", "characterIdentity"})
 public abstract class Character {
     private int seatNumber;
     private boolean dead;
     private boolean coupled;
-    private boolean saved;
-    private boolean guarded;
-    private boolean charmed;
-    private boolean banned;
     private boolean seatAssigned;
 
     public Character() {
         this.seatNumber = -1;
         this.dead = false;
         this.coupled = false;
-        this.saved = false;
-        this.guarded = false;
-        this.charmed = false;
-        this.banned = false;
         this.seatAssigned = false;
     }
 

@@ -44,21 +44,22 @@ public class CheckAvailableCharactersController {
                     .readValue(inputBody, new TypeReference<Map<String, String>>() {});
             if (!inputMap.containsKey(Constants.ROOM_ID_KEY)) {
                 String errorMessage = String
-                        .format("Join Game Request[%s] doesn't have a roomId", request.getRequestedSessionId());
+                        .format("Check Available Character Request[%s] doesn't have a roomId", request.getRequestedSessionId());
                 log.error(errorMessage);
                 throw new GameException(errorMessage);
             }
             if (!inputMap.containsKey(Constants.SEAT_NUMBER_KEY)) {
                 String errorMessage = String
-                        .format("Join Game Request[%s] doesn't have a seatNumber", request.getRequestedSessionId());
+                        .format("Check Available Character Request[%s] doesn't have a seatNumber", request.getRequestedSessionId());
                 log.error(errorMessage);
                 throw new GameException(errorMessage);
             }
             Game game = StorageUtil.readGameData(inputMap.get(Constants.ROOM_ID_KEY));
             int seatNumber = Integer.valueOf(inputMap.get(Constants.SEAT_NUMBER_KEY));
             Character[] characters = game.getCharacters();
-            if(!game.isInTheNight()) {
-                String errorMessage = String.format("The game[%s] hasn't been started", game.getRoomId());
+            if(!game.isInTheNight() || CharacterIdentity.THIEF != game.getCharacterOrder().peek()) {
+                String errorMessage = String.format("The game[%s] is not ready for this character[%s].",
+                                                    game.getRoomId(), CharacterIdentity.THIEF.toValue());
                 log.error(errorMessage);
                 throw new GameException(errorMessage);
             }

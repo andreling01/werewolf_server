@@ -58,12 +58,12 @@ public class GameInitializer {
             characterIdentity, int seatNum) {
         if (map.containsKey(characterIdentity)) {
             List<Integer> seatList = map.get(characterIdentity);
-            seatList.add(seatNum);
+            seatList.add(seatNum + 1);
             Collections.sort(seatList);
             map.put(characterIdentity, seatList);
         } else {
             List<Integer> seatList = new ArrayList<>();
-            seatList.add(seatNum);
+            seatList.add(seatNum + 1);
             map.put(characterIdentity, seatList);
         }
     }
@@ -126,6 +126,7 @@ public class GameInitializer {
                         Character cupid = new Cupid();
                         assignSeat(cupid, seatOrder, characters, characterMap);
                         characterOrderList.add(CharacterIdentity.CUPID);
+                        characterOrderList.add(CharacterIdentity.CUPID_EVENT);
                         numOfGods++;
                     }
                     break;
@@ -214,6 +215,7 @@ public class GameInitializer {
                     break;
             }
         }
+        characterOrderList.add(CharacterIdentity.TOWNSFOLK);
         Collections.sort(characterOrderList, new Comparator<CharacterIdentity>() {
             @Override
             public int compare(CharacterIdentity o1, CharacterIdentity o2) {

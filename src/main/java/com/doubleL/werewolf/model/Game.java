@@ -23,5 +23,21 @@ public class Game {
     private int numOfGods;
     private int numOfHumans;
     private Map<CharacterIdentity, List<Integer>> characterMap;
+    private int killedInTheNight;
+    private int charmedByBeautyWolf;
+    private int guarded;
+    private int savedByWitch;
+    private int poisonedByWitch;
+    private int banned;
     private boolean isInTheNight;
+
+    public Game() {
+        this.killedInTheNight = -1;
+        this.charmedByBeautyWolf = -1;
+        this.guarded = -1;
+        this.savedByWitch = -1;
+        this.poisonedByWitch = -1;
+        this.banned = -1;
+        this.isInTheNight = false;
+    }
 }

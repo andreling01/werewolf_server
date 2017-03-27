@@ -11,8 +11,8 @@ import java.util.Map;
  * Created by andreling on 2017/2/27.
  */
 public enum CharacterIdentity {
-    WITCH(6), PROPHET(7), GUARDIAN(8), HUNTER(10), ELDER_OF_SILENCE(9), IDIOT(99), CUPID(2), THIEF(1), TOWNSFOLK(
-            99), WOLF(3), WHITE_WOLF(99), BEAUTY_WOLF(4), DAEMON(5);
+    WITCH(7), PROPHET(8), GUARDIAN(9), HUNTER(11), ELDER_OF_SILENCE(10), IDIOT(99), CUPID(2), THIEF(1), TOWNSFOLK(
+            99), WOLF(4), WHITE_WOLF(99), BEAUTY_WOLF(5), DAEMON(6), CUPID_EVENT(3);
 
     private int order;
 
@@ -36,6 +36,7 @@ public enum CharacterIdentity {
         map.put("white_wolf", WHITE_WOLF);
         map.put("beauty_wolf", BEAUTY_WOLF);
         map.put("daemon", DAEMON);
+        map.put("cupid_event", CUPID_EVENT);
     }
 
     @JsonCreator
