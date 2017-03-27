@@ -63,7 +63,7 @@ public class CheckAvailableCharactersController {
                 log.error(errorMessage);
                 throw new GameException(errorMessage);
             }
-            if(CharacterIdentity.THIEF != characters[seatNumber].getCharacterIdentity()) {
+            if(CharacterIdentity.THIEF != characters[seatNumber - 1].getCharacterIdentity()) {
                 String errorMessage = String.format("Check Available Character Request[%s] didn't match character's " +
                                                             "identity", request.getRequestedSessionId());
                 log.error(errorMessage);

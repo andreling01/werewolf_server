@@ -8,7 +8,7 @@ Everyone|joinGame|roomId(String), seatNumber(Int)|CharacterInfo(Object), 200 | D
 GameOwner|startGame|roomId(String)|200(Game Start)/400(Wait for all players) | Done
 Everyone|useAbility|roomId(String), seatNumber(Int), targetSeatNumber(Int, Optional, List)|result(Boolean),200 | Done
 Thief|checkAvailableCharacters|roomId(String), seatNumber(Int),|CharacterInfo(List,Object),200 | Done
-Thief|pickCharacter|roomId(String),seatNumber(Int), characterIdentity(String)|200
+Thief|pickCharacter|roomId(String),seatNumber(Int), characterIdentity(String)|200 | Done
 Witch|checkKilledPerson|roomId(String)|seatNumber(Int),200
 Witch|useWitchAbility|roomId(String), seatNumber(Int), targetSeatNumber(Int, poison, optional), rescue(Boolean, optional)|200
 GameOwner|checkResult|roomId(String)|gameResult(Object), 200
