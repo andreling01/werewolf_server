@@ -128,7 +128,7 @@ public class CheckAvailableCharactersControllerTest {
     private int findThiefSeatNumber() throws Exception {
         for (int i = 0; i < game.getCharacters().length; i++) {
             if (game.getCharacters()[i].getCharacterIdentity() == CharacterIdentity.THIEF) {
-                return i;
+                return i + 1;
             }
         }
         throw new Exception("Test Error, Thief is not found in test game");
