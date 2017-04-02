@@ -90,7 +90,7 @@ public class GameInitializerTest {
         assertEquals(CharacterIdentity.GUARDIAN, actualGame.getCharacterOrder().poll());
         assertEquals(CharacterIdentity.ELDER_OF_SILENCE, actualGame.getCharacterOrder().poll());
         assertEquals(CharacterIdentity.HUNTER, actualGame.getCharacterOrder().poll());
-        assertEquals(CharacterIdentity.END_OF_NIGHT_EVENT, actualGame.getCharacterOrder().poll());
+        assertEquals(CharacterIdentity.TOWNSFOLK, actualGame.getCharacterOrder().poll());
         //check the size of seating array
         assertEquals("Size of Seating array: ", 19, actualGame.getCharacters().length);
         //check the numbers of type of character
