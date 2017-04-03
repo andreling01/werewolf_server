@@ -118,10 +118,12 @@ public class pickCharacterController {
 
     private void swapCharacter(Character[] characters, int seatNumber, int pickedCharacterSeatIndex) {
         Character character = characters[seatNumber - 1];
+        String deviceUUID = character.getDeviceUUID();
+        character.setDeviceUUID(null);
         character.setSeatNumber(pickedCharacterSeatIndex + 1);
         characters[seatNumber - 1] = characters[pickedCharacterSeatIndex];
         characters[seatNumber - 1].setSeatNumber(seatNumber);
-        characters[seatNumber - 1].setSeatAssigned(true);
+        characters[seatNumber - 1].setDeviceUUID(deviceUUID);
         characters[pickedCharacterSeatIndex] = character;
     }
 }

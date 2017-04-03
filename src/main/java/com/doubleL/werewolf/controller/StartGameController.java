@@ -49,7 +49,7 @@ public class StartGameController {
             Game game = StorageUtil.readGameData(inputMap.get(Constants.ROOM_ID_KEY));
             List<Integer> unreadyPlayer = new ArrayList<>(game.getNumOfPlayers());
             for (int i = 0; i < game.getNumOfPlayers(); i++) {
-                if (!game.getCharacters()[i].isSeatAssigned()) {
+                if (game.getCharacters()[i].getDeviceUUID() == null) {
                     unreadyPlayer.add(i);
                 }
             }
@@ -65,6 +65,11 @@ public class StartGameController {
         } catch (NullPointerException e) {
             String errorMessage = String
                     .format("Start Game Request[%s] has a null input body", request.getRequestedSessionId());
+            log.error(errorMessage);
+            throw new GameException(errorMessage, e);
+        } catch (NumberFormatException e) {
+            String errorMessage = String
+                    .format("Start Game Request[%s] has a integer parsing issue", request.getRequestedSessionId());
             log.error(errorMessage);
             throw new GameException(errorMessage, e);
         } catch (IOException e) {

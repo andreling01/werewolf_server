@@ -29,13 +29,13 @@ public abstract class Character {
     private int seatNumber;
     private boolean dead;
     private boolean coupled;
-    private boolean seatAssigned;
+    private String deviceUUID;
 
     public Character() {
         this.seatNumber = -1;
         this.dead = false;
         this.coupled = false;
-        this.seatAssigned = false;
+        this.deviceUUID = null;
     }
 
     public abstract CharacterType getCharacterType();

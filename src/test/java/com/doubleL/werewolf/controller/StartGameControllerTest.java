@@ -51,7 +51,7 @@ public class StartGameControllerTest {
     public void testNormalCase() throws Exception {
         game = new GameCreator().createAGame("normalSetup.json");
         for(int i = 0; i < game.getNumOfPlayers(); i++) {
-            game.getCharacters()[i].setSeatAssigned(true);
+            game.getCharacters()[i].setDeviceUUID("TEST_DEVICE_UUID");
         }
         StorageUtil.writeGameData(game);
         Map<String, String> inputMap = new HashMap<>();

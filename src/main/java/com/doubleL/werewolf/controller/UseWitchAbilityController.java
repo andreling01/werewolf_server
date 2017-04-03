@@ -73,8 +73,8 @@ public class UseWitchAbilityController {
             Witch witch = (Witch) game.getCharacters()[seatNumber - 1];
             Boolean rescue = false;
             int poisonTarget = -1;
-            if (inputMap.containsKey(Constants.RESUCE_OPTION_KEY)) {
-                rescue = Boolean.valueOf(inputMap.get(Constants.RESUCE_OPTION_KEY));
+            if (inputMap.containsKey(Constants.RESCUE_OPTION_KEY)) {
+                rescue = Boolean.valueOf(inputMap.get(Constants.RESCUE_OPTION_KEY));
             }
             if (inputMap.containsKey(Constants.TARGET_SEAT_NUMBER_KEY)) {
                 poisonTarget = Integer.valueOf(inputMap.get(Constants.TARGET_SEAT_NUMBER_KEY));

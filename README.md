@@ -4,7 +4,8 @@
 User | Name | Body | Response | Dev Status |
 -----|------|------|---------|-------------|
 GameOwner|createGame| gameSetup(String) |roomId(String), 200 | Done
-Everyone|joinGame|roomId(String), seatNumber(Int)|CharacterInfo(Object), 200 | Done
+Everyone | joinRoom | roomId(String), DeviceUUID(String)|num_of_seats(Int), playerSeatNum(Int), 200| Done
+Everyone|joinGame|roomId(String), seatNumber(Int), DeviceUUID(String)|CharacterInfo(Object), 200 | Done
 GameOwner|startGame|roomId(String)|200(Game Start)/400(Wait for all players) | Done
 Everyone|useAbility|roomId(String), seatNumber(Int), targetSeatNumber(Int, Optional, List)|result(Boolean),200 | Done
 Thief|checkAvailableCharacters|roomId(String), seatNumber(Int),|CharacterInfo(List,Object),200 | Done

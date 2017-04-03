@@ -53,12 +53,18 @@ public class JoinGameController {
                 log.error(errorMessage);
                 throw new GameException(errorMessage);
             }
+            if (!inputMap.containsKey(Constants.DEVICE_UUID)) {
+                String errorMessage = String.format("Join Game Request[%s] doesn't have a device uuid", request
+                        .getRequestedSessionId());
+                log.error(errorMessage);
+                throw new GameException(errorMessage);
+            }
             Game game = StorageUtil.readGameData(inputMap.get(Constants.ROOM_ID_KEY));
             int seatNumber = Integer.valueOf(inputMap.get(Constants.SEAT_NUMBER_KEY));
-            if (!game.getCharacters()[seatNumber - 1].isSeatAssigned()) {
+            if (game.getCharacters()[seatNumber - 1].getDeviceUUID() == null) {
                 log.info(String.format("Game[%s] Seat [%s] has been assigned", game.getRoomId(),
                                    String.valueOf(seatNumber)));
-                game.getCharacters()[seatNumber - 1].setSeatAssigned(true);
+                game.getCharacters()[seatNumber - 1].setDeviceUUID(inputMap.get(Constants.DEVICE_UUID));
                 StorageUtil.writeGameData(game);
                 return new ResponseEntity<>(game.getCharacters()[seatNumber - 1], HttpStatus.OK);
             } else {
