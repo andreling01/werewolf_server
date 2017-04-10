@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -65,6 +64,12 @@ public class UseAbilityController {
             }
             Game game = StorageUtil.readGameData((String) inputMap.get(Constants.ROOM_ID_KEY));
             int seatNumber = (int) inputMap.get(Constants.SEAT_NUMBER_KEY);
+            if (game.getCharacters()[seatNumber - 1].isDead()) {
+                String errorMessage = String.format("Character[%d] in Game[%s] has been dead.", seatNumber, game
+                        .getRoomId());
+                log.error(errorMessage);
+                throw new GameException(errorMessage);
+            }
             Character ongoingCharacter = game.getCharacters()[seatNumber - 1];
             List<Integer> targetSeatingNumbers;
             if (!game.isInTheNight()) {
@@ -83,7 +88,7 @@ public class UseAbilityController {
                 }
                 game.getCharacterOrder().add(game.getCharacterOrder().poll());
                 StorageUtil.writeGameData(game);
-                return new ResponseEntity<>(true, HttpStatus.OK);
+                return new ResponseEntity<>(Boolean.TRUE, HttpStatus.OK);
             }
             if (!game.isInTheNight() || ongoingCharacter.getCharacterIdentity() != game.getCharacterOrder().peek()) {
                 String errorMessage = String.format("The game[%s] is not ready for this character[%s].",
@@ -99,11 +104,11 @@ public class UseAbilityController {
                         log.error(errorMessage);
                         throw new GameException(errorMessage);
                     }
-                    game.getCharacters()[targetSeatingNumbers.get(0) - 1].setCoupled(true);
-                    game.getCharacters()[targetSeatingNumbers.get(1) - 1].setCoupled(true);
+                    game.setCoupleA(targetSeatingNumbers.get(0));
+                    game.setCoupleB(targetSeatingNumbers.get(1));
                     game.getCharacterOrder().poll();
                     StorageUtil.writeGameData(game);
-                    return new ResponseEntity<>(true, HttpStatus.OK);
+                    return new ResponseEntity<>(Boolean.TRUE, HttpStatus.OK);
                 case "beauty_wolf":
                     targetSeatingNumbers = getTargetSeatNumbers(inputMap, request);
                     if (targetSeatingNumbers.size() > 0) {
@@ -113,7 +118,7 @@ public class UseAbilityController {
                     }
                     game.getCharacterOrder().add(game.getCharacterOrder().poll());
                     StorageUtil.writeGameData(game);
-                    return new ResponseEntity<>(true, HttpStatus.OK);
+                    return new ResponseEntity<>(Boolean.TRUE, HttpStatus.OK);
                 case "daemon":
                     targetSeatingNumbers = getTargetSeatNumbers(inputMap, request);
                     boolean isGod = targetSeatingNumbers.size() > 0 && CharacterType.GOD ==
@@ -137,7 +142,7 @@ public class UseAbilityController {
                     }
                     game.getCharacterOrder().add(game.getCharacterOrder().poll());
                     StorageUtil.writeGameData(game);
-                    return new ResponseEntity<>(true, HttpStatus.OK);
+                    return new ResponseEntity<>(Boolean.TRUE, HttpStatus.OK);
                 case "elder_of_silence":
                     targetSeatingNumbers = getTargetSeatNumbers(inputMap, request);
                     if (targetSeatingNumbers.size() > 0) {
@@ -147,7 +152,7 @@ public class UseAbilityController {
                     }
                     game.getCharacterOrder().add(game.getCharacterOrder().poll());
                     StorageUtil.writeGameData(game);
-                    return new ResponseEntity<>(true, HttpStatus.OK);
+                    return new ResponseEntity<>(Boolean.TRUE, HttpStatus.OK);
                 case "hunter":
                     return new ResponseEntity<>(game.getPoisonedByWitch() != seatNumber - 1, HttpStatus.OK);
                 default:
@@ -180,6 +185,6 @@ public class UseAbilityController {
             log.error(errorMessage);
             throw new GameException(errorMessage);
         }
-        return (ArrayList) inputMap.get(Constants.TARGET_SEAT_NUMBER_KEY);
+        return (List<Integer>) inputMap.get(Constants.TARGET_SEAT_NUMBER_KEY);
     }
 }

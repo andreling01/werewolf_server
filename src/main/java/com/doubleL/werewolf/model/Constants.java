@@ -10,4 +10,8 @@ public class Constants {
     public static final String CHARACTER_IDENTITY_KEY = "characterIdentity";
     public static final String RESCUE_OPTION_KEY = "rescue";
     public static final String DEVICE_UUID = "uuid";
+    public static final String KILLED_PLAYER = "killedPlayer";
+    public static final String SUICIDE_FOR_LOVE = "suicideForLove";
+    public static final String BANNED = "banned";
+    public static final String VOTE_RESULT = "voteResult";
 }

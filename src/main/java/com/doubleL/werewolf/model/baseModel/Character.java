@@ -28,13 +28,11 @@ import lombok.Setter;
 public abstract class Character {
     private int seatNumber;
     private boolean dead;
-    private boolean coupled;
     private String deviceUUID;
 
     public Character() {
         this.seatNumber = -1;
         this.dead = false;
-        this.coupled = false;
         this.deviceUUID = null;
     }
 

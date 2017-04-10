@@ -29,7 +29,7 @@ import static com.google.common.base.Preconditions.checkNotNull;
 @AllArgsConstructor
 @Slf4j
 @RestController
-public class pickCharacterController {
+public class PickCharacterController {
 
     @Autowired
     private ObjectMapper objectMapper;
@@ -97,7 +97,7 @@ public class pickCharacterController {
             swapCharacter(characters, seatNumber, pickedCharacterSeatIndex);
             game.getCharacterOrder().poll();
             StorageUtil.writeGameData(game);
-            return new ResponseEntity<Boolean>(true, HttpStatus.OK);
+            return new ResponseEntity<>(Boolean.TRUE, HttpStatus.OK);
         } catch (NullPointerException e) {
             String errorMessage = String.format("Pick Character Request[%s] has a null input body", request
                     .getRequestedSessionId());

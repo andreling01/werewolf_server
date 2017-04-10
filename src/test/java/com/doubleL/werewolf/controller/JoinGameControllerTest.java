@@ -55,6 +55,7 @@ public class JoinGameControllerTest {
         Map<String, String> inputMap = new HashMap<>();
         inputMap.put(Constants.ROOM_ID_KEY, game.getRoomId());
         inputMap.put(Constants.SEAT_NUMBER_KEY, "1");
+        inputMap.put(Constants.DEVICE_UUID, "testDeviceId");
         when(mockObjectMapper.readValue(anyString(), any(TypeReference.class))).thenReturn(inputMap);
         ResponseEntity<Character> response = joinGameController.joinGame("inputData", request);
         assertNotNull(response);

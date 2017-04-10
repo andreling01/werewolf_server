@@ -29,6 +29,8 @@ public class Game {
     private int savedByWitch;
     private int poisonedByWitch;
     private int banned;
+    private int coupleA;
+    private int coupleB;
     private boolean isInTheNight;
 
     public Game() {

@@ -57,6 +57,12 @@ public class UseWitchAbilityController {
             }
             int seatNumber = Integer.valueOf(inputMap.get(Constants.SEAT_NUMBER_KEY));
             Game game = StorageUtil.readGameData(inputMap.get(Constants.ROOM_ID_KEY));
+            if (game.getCharacters()[seatNumber - 1].isDead()) {
+                String errorMessage = String.format("Character[%d] in Game[%s] has been dead.", seatNumber, game
+                        .getRoomId());
+                log.error(errorMessage);
+                throw new GameException(errorMessage);
+            }
             if (!game.isInTheNight() || CharacterIdentity.WITCH != game.getCharacterOrder().peek()) {
                 String errorMessage = String
                         .format("The game[%s] is not ready for this character[%s].", game.getRoomId(),
